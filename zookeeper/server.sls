@@ -16,28 +16,9 @@ include:
     - group: zookeeper
     - makedirs: True
 
-move-zookeeper-dist-conf:
-  cmd.run:
-    - name: mv {{ zk.real_home }}/conf {{ zk.real_config }}
-    - unless: test -L {{ zk.real_home }}/conf
-    - require:
-      - file: /etc/zookeeper
-
-zookeeper-config-link:
-  alternatives.install:
-    - link: {{ zk.alt_config }}
-    - path: {{ zk.real_config }}
-    - priority: 30
-
-{{ zk.real_home }}/conf:
-  file.symlink:
-    - target: {{ zk.real_config }}
-    - require:
-      - cmd: move-zookeeper-dist-conf
-
 zoo-cfg:
   file.managed:
-    - name: {{ zk.real_config }}/zoo.cfg
+    - name: {{ zk.config }}/zoo.cfg
     - source: salt://zookeeper/conf/zoo.cfg
     - user: root
     - group: root
@@ -61,7 +42,7 @@ zoo-cfg:
     - contents: |
         {{ zk.myid }}
 
-{{ zk.real_config }}/zookeeper-env.sh:
+{{ zk.config }}/zookeeper-env.sh:
   file.managed:
     - source: salt://zookeeper/conf/zookeeper-env.sh
     - user: root
@@ -86,7 +67,7 @@ zoo-cfg:
     - mode: {{ zookeeper_map.service_script_mode }}
     - template: jinja
     - context:
-      alt_home: {{ zk.alt_home }}
+      home: {{ zk.home }}
 
 zookeeper-service:
   service.running:

@@ -18,17 +18,7 @@ zk-directories:
       - /var/lib/zookeeper
       - /var/log/zookeeper
 
-install-zookeeper-dist:
-  cmd.run:
-    - name: curl -L '{{ zk.source_url }}' | tar xz --no-same-owner
-    - cwd: {{ zk.prefix }}
-    - unless: test -d {{ zk.real_home }}/lib
-    - user: root
-  alternatives.install:
-    - name: zookeeper-home-link
-    - link: {{ zk.alt_home }}
-    - path: {{ zk.real_home }}
-    - priority: 30
-    - require:
-      - cmd: install-zookeeper-dist
-
+zookeeper_package:
+  pkg.installed:
+    - name: {{ zk.package_name }}
+    - version: {{ zk.version }}

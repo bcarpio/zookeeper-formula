@@ -1,0 +1,5 @@
+base:
+
+  '*':
+    - zookeeper
+    - zookeeper.server

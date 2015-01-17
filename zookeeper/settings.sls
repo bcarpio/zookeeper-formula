@@ -3,18 +3,18 @@
 {% set g  = salt['grains.get']('zookeeper', {}) %}
 {% set gc = g.get('config', {}) %}
 
-{%- set default_uid = '6030' %}
+{%- set default_uid = '5000' %}
 # these are global - hence pillar-only
-{%- set uid          = p.get('uid', '6030') %}
-{%- set userhome     = p.get('userhome', '/home/zookeeper') %}
-{%- set prefix       = p.get('prefix', '/usr/lib') %}
-{%- set java_home    = salt['pillar.get']('java_home', '/usr/lib/java') %}
+{%- set uid             = p.get('uid', '5000') %}
+{%- set userhome        = p.get('userhome', '/home/zookeeper') %}
+{%- set prefix          = p.get('prefix', '/usr/lib') %}
+{%- set package_name    = p.get('package_name', 'zookeeper') %}
+{%- set version         = p.get('version', '3.4.5+dfsg-1') %}
+{%- set java_home       = p.get('java_home', '/usr/lib/java') %}
 
 {%- set log_level         = gc.get('log_level', pc.get('log_level', 'INFO')) %}
-{%- set version           = g.get('version', p.get('version', '3.4.6')) %}
-{%- set version_name      = 'zookeeper-' + version %}
-{%- set default_url       = 'http://apache.osuosl.org/zookeeper/' + version_name + '/' + version_name + '.tar.gz' %}
-{%- set source_url        = g.get('source_url', p.get('source_url', default_url)) %}
+
+
 # bind_address is only supported as a grain, because it has to be host-specific
 {%- set bind_address      = gc.get('bind_address', '0.0.0.0') %}
 {%- set data_dir          = gc.get('data_dir', pc.get('data_dir', '/var/lib/zookeeper/data')) %}
@@ -24,7 +24,6 @@
 {%- set snap_retain_count = gc.get('snap_retain_count', pc.get('snap_retain_count', 3)) %}
 {%- set purge_interval    = gc.get('purge_interval', pc.get('purge_interval', None)) %}
 {%- set max_client_cnxns  = gc.get('max_client_cnxns', pc.get('max_client_cnxns', None)) %}
-
 
 #
 # JVM options - just follow grains/pillar settings for now
@@ -41,12 +40,10 @@
 {%- set initial_heap_size = gc.get('initial_heap_size', pc.get('initial_heap_size', 256)) %}
 {%- set jvm_opts          = gc.get('jvm_opts', pc.get('jvm_opts', None)) %}  
 
-{%- set alt_config   = salt['grains.get']('zookeeper:config:directory', '/etc/zookeeper/conf') %}
-{%- set real_config  = alt_config + '-' + version %}
-{%- set alt_home     = prefix + '/zookeeper' %}
-{%- set real_home    = alt_home + '-' + version %}
-{%- set real_config_src  = real_home + '/conf' %}
-{%- set real_config_dist = alt_config + '.dist' %}
+{%- set config   = salt['grains.get']('zookeeper:config:directory', '/etc/zookeeper/conf') %}
+{%- set home     = prefix + '/zookeeper' %}
+{%- set config_src  = home + '/conf' %}
+{%- set config_dist = config + '.dist' %}
 
 {%- set force_mine_update = salt['mine.send']('network.get_hostname') %}
 {%- set zookeepers_host_dict = salt['mine.get']('roles:zookeeper', 'network.get_hostname', 'grain') %}
@@ -93,12 +90,10 @@
                            'source_url': source_url,
                            'myid': myid,
                            'prefix' : prefix,
-                           'alt_config' : alt_config,
-                           'real_config' : real_config,
-                           'alt_home' : alt_home,
-                           'real_home' : real_home,
-                           'real_config_src' : real_config_src,
-                           'real_config_dist' : real_config_dist,
+                           'config' : config,
+                           'home' : home,
+                           'config_src' : config_src,
+                           'config_dist' : config_dist,
                            'java_home' : java_home,
                            'port': port,
                            'jmx_port': jmx_port,
@@ -118,4 +113,5 @@
                            'max_perm_size': max_perm_size,
                            'jvm_opts': jvm_opts,
                            'log_level': log_level,
+                           'package_name' : package_name,
                         }) %}
