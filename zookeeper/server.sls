@@ -1,4 +1,3 @@
-{%- if 'zookeeper' in salt['grains.get']('roles', []) %}
 {%- from 'zookeeper/settings.sls' import zk with context %}
 
 include:
@@ -65,4 +64,3 @@ zookeeper-service:
       - file: {{ zk.data_dir }}
     - watch:
       - file: zoo-cfg
-{%- endif %}
