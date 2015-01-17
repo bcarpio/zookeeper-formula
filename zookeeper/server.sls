@@ -1,6 +1,5 @@
 {%- if 'zookeeper' in salt['grains.get']('roles', []) %}
 {%- from 'zookeeper/settings.sls' import zk with context %}
-{%- from "zookeeper/map.jinja" import zookeeper_map with context %}
 
 include:
   - zookeeper
@@ -58,17 +57,6 @@ zoo-cfg:
       jvm_opts: {{ zk.jvm_opts }}
       log_level: {{ zk.log_level }}
 
-{%- if zookeeper_map.service_script %}
-{{ zookeeper_map.service_script }}:
-  file.managed:
-    - source: salt://zookeeper/conf/{{ zookeeper_map.service_script_source }}
-    - user: root
-    - group: root
-    - mode: {{ zookeeper_map.service_script_mode }}
-    - template: jinja
-    - context:
-      home: {{ zk.home }}
-
 zookeeper-service:
   service.running:
     - name: zookeeper
@@ -77,5 +65,4 @@ zookeeper-service:
       - file: {{ zk.data_dir }}
     - watch:
       - file: zoo-cfg
-{%- endif %}
 {%- endif %}

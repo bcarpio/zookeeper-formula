@@ -18,7 +18,8 @@ zk-directories:
       - /var/lib/zookeeper
       - /var/log/zookeeper
 
-zookeeper_package:
+zookeeper_packages:
   pkg.installed:
-    - name: {{ zk.package_name }}
-    - version: {{ zk.version }}
+    - pkgs:
+      - zookeeper: {{ zk.version }}
+      - zookeeperd: {{ zk.version }}

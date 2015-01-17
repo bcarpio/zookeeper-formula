@@ -5,25 +5,25 @@
 
 {%- set default_uid = '5000' %}
 # these are global - hence pillar-only
-{%- set uid             = p.get('uid', '5000') %}
-{%- set userhome        = p.get('userhome', '/home/zookeeper') %}
-{%- set prefix          = p.get('prefix', '/usr/lib') %}
-{%- set package_name    = p.get('package_name', 'zookeeper') %}
-{%- set version         = p.get('version', '3.4.5+dfsg-1') %}
-{%- set java_home       = p.get('java_home', '/usr/lib/java') %}
+{%- set uid                 = p.get('uid', '5000') %}
+{%- set userhome            = p.get('userhome', '/home/zookeeper') %}
+{%- set prefix              = p.get('prefix', '/usr/lib') %}
+{%- set package_name        = p.get('package_name', 'zookeeper') %}
+{%- set version             = p.get('version', '3.4.5+dfsg-1') %}
+{%- set java_home           = p.get('java_home', '/usr/lib/java') %}
 
-{%- set log_level         = gc.get('log_level', pc.get('log_level', 'INFO')) %}
+{%- set log_level           = gc.get('log_level', pc.get('log_level', 'INFO')) %}
 
 
 # bind_address is only supported as a grain, because it has to be host-specific
-{%- set bind_address      = gc.get('bind_address', '0.0.0.0') %}
-{%- set data_dir          = gc.get('data_dir', pc.get('data_dir', '/var/lib/zookeeper/data')) %}
-{%- set port              = gc.get('port', pc.get('port', '2181')) %}
-{%- set jmx_port          = gc.get('jmx_port', pc.get('jmx_port', '2183')) %}
-{%- set snap_count        = gc.get('snap_count', pc.get('snap_count', None)) %}
-{%- set snap_retain_count = gc.get('snap_retain_count', pc.get('snap_retain_count', 3)) %}
-{%- set purge_interval    = gc.get('purge_interval', pc.get('purge_interval', None)) %}
-{%- set max_client_cnxns  = gc.get('max_client_cnxns', pc.get('max_client_cnxns', None)) %}
+{%- set bind_address        = gc.get('bind_address', '0.0.0.0') %}
+{%- set data_dir            = gc.get('data_dir', pc.get('data_dir', '/var/lib/zookeeper/data')) %}
+{%- set port                = gc.get('port', pc.get('port', '2181')) %}
+{%- set jmx_port            = gc.get('jmx_port', pc.get('jmx_port', '2183')) %}
+{%- set snap_count          = gc.get('snap_count', pc.get('snap_count', None)) %}
+{%- set snap_retain_count   = gc.get('snap_retain_count', pc.get('snap_retain_count', 3)) %}
+{%- set purge_interval      = gc.get('purge_interval', pc.get('purge_interval', None)) %}
+{%- set max_client_cnxns    = gc.get('max_client_cnxns', pc.get('max_client_cnxns', None)) %}
 
 #
 # JVM options - just follow grains/pillar settings for now
@@ -85,7 +85,6 @@
 {%- set zk = {} %}
 {%- do zk.update( { 'uid': uid,
                            'version' : version,
-                           'version_name': version_name,
                            'userhome' : userhome,
                            'source_url': source_url,
                            'myid': myid,
@@ -113,5 +112,4 @@
                            'max_perm_size': max_perm_size,
                            'jvm_opts': jvm_opts,
                            'log_level': log_level,
-                           'package_name' : package_name,
                         }) %}
