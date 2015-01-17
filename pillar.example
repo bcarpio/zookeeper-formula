@@ -1,11 +1,10 @@
 # these are the supported pillars with their defaults
 
-java_home: /usr/java/default
+ava_home: /usr/lib/jvm/java-7-openjdk-amd64
 zookeeper:
-    source_url: 'http://www.us.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz'
-    version: 3.4.6
-    prefix: /usr/lib
-    uid: 6030
+    version: 3.4.5+dfsg-1
+    uid: 5000
+    gid: 5000
     config:
       data_dir: /var/lib/zookeeper/data
       port: 2181
