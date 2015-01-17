@@ -40,10 +40,10 @@
 {%- set initial_heap_size = gc.get('initial_heap_size', pc.get('initial_heap_size', 256)) %}
 {%- set jvm_opts          = gc.get('jvm_opts', pc.get('jvm_opts', None)) %}  
 
-{%- set config   = salt['grains.get']('zookeeper:config:directory', '/etc/zookeeper/conf') %}
-{%- set home     = prefix + '/zookeeper' %}
-{%- set config_src  = home + '/conf' %}
-{%- set config_dist = config + '.dist' %}
+{%- set config   	  = salt['grains.get']('zookeeper:config:directory', '/etc/zookeeper/conf') %}
+{%- set home     	  = prefix + '/zookeeper' %}
+{%- set config_src  	  = home + '/conf' %}
+{%- set config_dist 	  = config + '.dist' %}
 
 {%- set force_mine_update = salt['mine.send']('network.get_hostname') %}
 {%- set zookeepers_host_dict = salt['mine.get']('roles:zookeeper', 'network.get_hostname', 'grain') %}
