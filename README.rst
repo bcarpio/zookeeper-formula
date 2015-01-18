@@ -9,11 +9,6 @@ Formula to set up and configure a single-node zookeeper server.
     See the full `Salt Formulas installation and usage instructions
     <http://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html>`_.
 
-Formula Dependencies
-====================
-
-* sun-java
-
 Available states
 ================
 
@@ -23,7 +18,7 @@ Available states
 ``zookeeper``
 -------------
 
-Downloads the zookeeper tarball from zookeeper:source_url (either pillar or grain), installs the package.
+Installs the package.
 
 ``zookeeper.server``
 --------------------
@@ -43,7 +38,7 @@ For this to work it is necessary to setup salt mine like below in /etc/salt/mini
 ::
 
     mine_functions:
-      network.get_hostname: []
+      network.ip_addrs: []
       grains.items: []
 
 
@@ -63,11 +58,11 @@ This will allow you to use the zookeeper.settings state in other states to confi
         - context:
           zookeepers: {{ zk.connection_string }}
 
-is a string that reflects the names and ports of the hosts with the zookeeper role in the cluster, like
+is a string that reflects the IPs and ports of the hosts with the zookeeper role in the cluster, like
 
 ::
 
-    host1.mycluster.net:2181,host2.mycluster.net:2181,host3.mycluster.net:2181
+    10.10.10.10:2181,10.10.10.20:2181,10.10.10.30:2181
 
 and this will also work for single-node configurations. Whenever you have more than 2 hosts with the zookeeper role the formula will setup
 a zookeeper cluster, whenever there is an even number it will be (number - 1).

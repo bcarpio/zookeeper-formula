@@ -1,6 +1,6 @@
 # these are the supported pillars with their defaults
 
-ava_home: /usr/lib/jvm/java-7-openjdk-amd64
+java_home: /usr/lib/jvm/java-7-openjdk-amd64
 zookeeper:
     version: 3.4.5+dfsg-1
     uid: 5000
@@ -18,14 +18,3 @@ zookeeper:
       initial_heap_size: 256
       jvm_opts: None
       log_level: INFO
-
-mine_functions:
-  network.interfaces: []
-  test.ping: []
-
-# you can override everything in config: locally with grains, additionally there is support for
-# the bind_address grain
-#
-# zookeeper:
-#   config:
-#     bind_address: /var/lib/zookeeper/data
