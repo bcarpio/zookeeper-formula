@@ -49,7 +49,11 @@
 {%- set zookeepers_host_dict = salt['mine.get']('roles:zookeeper', 'network.ip_addrs', 'grain') %}
 {%- set zookeepers_ids = zookeepers_host_dict.keys() %}
 {%- set zookeepers_hosts = zookeepers_host_dict.values() %}
-{%- set zookeepers_hosts = zookeepers_hosts[0] %}
+{%- set ips = [] %}
+{% for ip_addr in zookeepers_hosts %}
+{{ ips.append(ip_addr[0]) }}
+{% endfor %}
+{%- set zookeepers_hosts = ips %}
 {%- set zookeeper_host_num = zookeepers_ids | length() %}
 
 {%- if zookeeper_host_num == 0 %}
