@@ -47,7 +47,7 @@
 
 {%- set force_mine_update = salt['mine.send']('network.ip_addrs') %}
 {%- set cluster_name = salt['grains.get']('zookeeper:cluster_name') %}
-{%- set zookeepers_host_dict = salt['mine.get']('zookeeper:cluster_name:'+cluster_name, 'network.ip_addrs', 'grain') %}
+{%- set zookeepers_host_dict = salt['mine.get']('role:'+cluster_name, 'network.ip_addrs', 'grain') %}
 {%- set zookeepers_ids = zookeepers_host_dict.keys() %}
 {%- set zookeepers_hosts = zookeepers_host_dict.values() %}
 {%- set ips = [] %}
