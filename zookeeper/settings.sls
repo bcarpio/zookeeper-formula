@@ -46,7 +46,8 @@
 {%- set config_dist 	  = config + '.dist' %}
 
 {%- set force_mine_update = salt['mine.send']('network.ip_addrs') %}
-{%- set zookeepers_host_dict = salt['mine.get']('roles:zookeeper', 'network.ip_addrs', 'grain') %}
+{%- set cluster_name = salt['grains.get']('zookeeper:cluster_name') %}
+{%- set zookeepers_host_dict = salt['mine.get']('zookeeper:cluster_name:'+cluster_name, 'network.ip_addrs', 'grain') %}
 {%- set zookeepers_ids = zookeepers_host_dict.keys() %}
 {%- set zookeepers_hosts = zookeepers_host_dict.values() %}
 {%- set ips = [] %}

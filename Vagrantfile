@@ -22,6 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Provision VM with this SaltStack formula, in masterless mode.
   config.vm.provision :salt do |salt|
     salt.minion_config = "./.vagrant-salt/minion"
+    salt.grains_config = "./.vagrant-salt/grains"
     salt.run_highstate = true
     salt.install_type = 'stable'
     salt.colorize = true
