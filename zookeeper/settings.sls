@@ -1,7 +1,7 @@
-{% set p  = salt['pillar.get']('zookeeper', {}) %}
-{% set pc = p.get('config', {}) %}
-{% set g  = salt['grains.get']('zookeeper', {}) %}
-{% set gc = g.get('config', {}) %}
+{% set p    = salt['pillar.get']('zookeeper', {}) %}
+{% set pc   = p.get('config', {}) %}
+{% set g    = salt['grains.get']('zookeeper', {}) %}
+{% set gc   = g.get('config', {}) %}
 
 {%- set default_uid = '5000' %}
 # these are global - hence pillar-only
