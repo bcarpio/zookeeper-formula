@@ -2,4 +2,5 @@ zookeeper:
   cluster_name: bcarpio
 
 roles:
-  zookeeper
+  - zookeeper
+  - bcarpio
